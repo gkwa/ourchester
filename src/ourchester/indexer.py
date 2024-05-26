@@ -4,7 +4,7 @@ import time
 import whoosh.fields
 import whoosh.index
 
-from . import duration_converter
+from .duration_converter import convert_duration
 
 logger = logging.getLogger(__name__)
 
@@ -39,9 +39,7 @@ def _index_directories(directories, extensions, writer, fast_duration=None):
     indexed_paths = set()
     current_time = time.time()
     fast_cutoff_time = (
-        current_time - duration_converter.convert_duration(fast_duration)
-        if fast_duration
-        else None
+        current_time - convert_duration(fast_duration) if fast_duration else None
     )
     for directory in directories:
         logger.info(f"Indexing directory: {directory}")
@@ -50,12 +48,15 @@ def _index_directories(directories, extensions, writer, fast_duration=None):
             text_files = directory.glob(file_pattern)
             for file_path in text_files:
                 try:
-                    if (
-                        fast_cutoff_time
-                        and file_path.stat().st_mtime < fast_cutoff_time
-                    ):
+                    file_mtime = file_path.stat().st_mtime
+                    if fast_cutoff_time and file_mtime < fast_cutoff_time:
                         continue
-                    logging.debug(f"indexing {file_path}")
+                    time_since_modification = (
+                        current_time - file_mtime
+                    ) / 60  # in minutes
+                    logger.debug(
+                        f"File: {file_path}, Last modified: {time_since_modification:.2f} minutes ago"
+                    )
                     file_path_str = _resolve_file_path(file_path)
                     if file_path_str:
                         indexed_paths.add(file_path_str)
