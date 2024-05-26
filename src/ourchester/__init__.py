@@ -1,27 +1,24 @@
-import logging
+import os
 import pathlib
 
 import platformdirs
 import whoosh.index
 
-from . import cli, indexer, searcher
-from . import log as logmod
+from . import cli, indexer, logging, searcher
 
 __project_name__ = "ourchester"
 
 
 def main() -> int:
     args = cli.parse_args()
-    logmod.configure_logging(args.verbose)
+    logging.configure_logging(args.verbose)
 
     cache_dir = _get_cache_dir()
     index_dir = cache_dir / args.index
 
-    logging.debug(f"index dir: {index_dir}")
-
     if args.command == "index":
         directories = [pathlib.Path(dir) for dir in args.directories]
-        indexer.index_files(directories, index_dir, args.extensions, args.fast)
+        indexer.index_files(directories, index_dir, args.extensions)
     elif args.command == "search":
         try:
             index = indexer.load_index(index_dir)
@@ -37,8 +34,8 @@ def main() -> int:
 
 def _get_cache_dir():
     user_cache_dir = platformdirs.user_cache_dir()
-    ourchester_cache_dir = pathlib.Path(user_cache_dir) / "ourchester"
-    ourchester_cache_dir.mkdir(exist_ok=True, parents=True)
+    ourchester_cache_dir = os.path.join(user_cache_dir, "ourchester")
+    os.makedirs(ourchester_cache_dir, exist_ok=True)
     return pathlib.Path(ourchester_cache_dir)
 
 
