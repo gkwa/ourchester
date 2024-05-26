@@ -1,4 +1,5 @@
 import logging
+import time
 
 import whoosh.fields
 import whoosh.index
@@ -11,11 +12,15 @@ def index_files(directories, index_dir, extensions):
         path=whoosh.fields.ID(unique=True, stored=True),
         content=whoosh.fields.TEXT(stored=True),
     )
+    start_time = time.time()
     ix = _create_or_open_index(index_dir, schema)
     writer = ix.writer()
     indexed_paths = _index_directories(directories, extensions, writer)
     _remove_deleted_files(ix, indexed_paths, writer)
     writer.commit()
+    end_time = time.time()
+    indexing_time = end_time - start_time
+    logger.info(f"Indexing completed in {indexing_time:.2f} seconds")
 
 
 def _create_or_open_index(index_dir, schema):
