@@ -1,5 +1,9 @@
 # ourchester
 
-## Learning jinja2 template inheritance
+## Usage example
 
-https://jinja.palletsprojects.com/en/latest/templates/#template-inheritance
+```bash
+ourchester index '/Users/mtm/Documents/Obsidian Vault'
+ourchester search '"Python test"~4'
+
+```
