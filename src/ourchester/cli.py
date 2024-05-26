@@ -27,6 +27,12 @@ def parse_args():
         default=["txt", "md", "org"],
         help="File extensions to index (default: txt, md, org)",
     )
+    index_parser.add_argument(
+        "-f",
+        "--fast",
+        type=str,
+        help="Only index files modified within the specified duration (e.g., 1h, 30m)",
+    )
 
     search_parser = subparsers.add_parser("search", help="Search indexed text files")
     search_parser.add_argument("query", type=str, help="Proximity search query")
