@@ -20,7 +20,7 @@ def index_files(directories, index_dir, extensions):
 
 def _create_or_open_index(index_dir, schema):
     if not index_dir.exists():
-        index_dir.mkdir()
+        index_dir.mkdir(parents=True)
         return whoosh.index.create_in(str(index_dir), schema)
     else:
         return whoosh.index.open_dir(str(index_dir))
@@ -29,6 +29,7 @@ def _create_or_open_index(index_dir, schema):
 def _index_directories(directories, extensions, writer):
     indexed_paths = set()
     for directory in directories:
+        logger.info(f"Indexing directory: {directory}")
         for ext in extensions:
             file_pattern = f"**/*.{ext}"
             text_files = directory.glob(file_pattern)
