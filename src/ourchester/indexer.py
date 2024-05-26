@@ -1,9 +1,10 @@
 import logging
+
 import whoosh.fields
 import whoosh.index
-import whoosh.qparser
 
 logger = logging.getLogger(__name__)
+
 
 def index_markdown_files(directory, index_dir):
     schema = whoosh.fields.Schema(
@@ -38,13 +39,6 @@ def index_markdown_files(directory, index_dir):
         writer.delete_by_term("path", path)
     writer.commit()
 
+
 def load_index(index_dir):
     return whoosh.index.open_dir(str(index_dir))
-
-def perform_proximity_search(ix, query_str):
-    with ix.searcher() as searcher:
-        query = whoosh.qparser.QueryParser("content", ix.schema).parse(query_str)
-        results = searcher.search(query)
-        print(f"Found {len(results)} documents:")
-        for hit in results:
-            print(f"Path: {hit['path']}")
