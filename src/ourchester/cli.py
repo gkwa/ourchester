@@ -10,7 +10,7 @@ def parse_args():
 
     index_parser = subparsers.add_parser("index", help="Index Markdown files")
     index_parser.add_argument(
-        "directory", type=str, help="Directory containing Markdown files"
+        "directories", type=str, nargs="+", help="Directories containing Markdown files"
     )
     index_parser.add_argument(
         "-i", "--index", type=str, default="index", help="Directory to store the index"
