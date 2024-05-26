@@ -16,6 +16,13 @@ def main() -> int:
     elif args.command == "search":
         index_dir = pathlib.Path(args.index)
         index = indexer.load_index(index_dir)
-        searcher.perform_proximity_search(index, args.query)
+        results = searcher.perform_proximity_search(index, args.query)
+        _print_search_results(results)
 
     return 0
+
+
+def _print_search_results(results):
+    print(f"Found {len(results)} documents:")
+    for hit in results:
+        print(f"Path: {hit['path']}")
