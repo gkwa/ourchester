@@ -3,7 +3,7 @@
 ## Usage example
 
 ```bash
-ourchester index '/Users/mtm/Documents/Obsidian Vault'
-ourchester search '"Python test"~4'
+ourchester --verbose index '/Users/mtm/Documents/Obsidian Vault' /Users/mtm/pdev/taylormonacelli/notes
+ourchester search '"Python test"~10'
 
 ```
