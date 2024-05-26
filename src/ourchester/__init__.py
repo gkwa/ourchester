@@ -4,14 +4,14 @@ import pathlib
 import platformdirs
 import whoosh.index
 
-from . import cli, indexer, logging, searcher
+from . import cli, indexer, log, searcher
 
 __project_name__ = "ourchester"
 
 
 def main() -> int:
     args = cli.parse_args()
-    logging.configure_logging(args.verbose)
+    log.configure_logging(args.verbose)
 
     cache_dir = _get_cache_dir()
     index_dir = cache_dir / args.index
