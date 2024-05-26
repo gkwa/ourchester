@@ -12,7 +12,7 @@ def main() -> int:
     if args.command == "index":
         directories = [pathlib.Path(dir) for dir in args.directories]
         index_dir = pathlib.Path(args.index)
-        indexer.index_markdown_files(directories, index_dir)
+        indexer.index_files(directories, index_dir, args.extensions)
     elif args.command == "search":
         index_dir = pathlib.Path(args.index)
         index = indexer.load_index(index_dir)
