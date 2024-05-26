@@ -6,8 +6,8 @@ __project_name__ = "ourchester"
 
 
 def main() -> int:
-    logging.configure_logging()
     args = cli.parse_args()
+    logging.configure_logging(args.verbose)
 
     if args.command == "index":
         directories = [pathlib.Path(dir) for dir in args.directories]

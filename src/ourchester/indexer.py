@@ -33,6 +33,7 @@ def _index_directories(directories, extensions, writer):
             file_pattern = f"**/*.{ext}"
             text_files = directory.glob(file_pattern)
             for file_path in text_files:
+                logging.debug(f"indexing {file_path}")
                 file_path_str = _resolve_file_path(file_path)
                 if file_path_str:
                     indexed_paths.add(file_path_str)
