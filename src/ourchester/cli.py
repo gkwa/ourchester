@@ -20,8 +20,8 @@ def parse_args():
         "--extensions",
         type=str,
         nargs="+",
-        default=["txt", "md"],
-        help="File extensions to index (default: txt, md)",
+        default=["txt", "md", "org"],
+        help="File extensions to index (default: txt, md, org)",
     )
 
     search_parser = subparsers.add_parser("search", help="Search indexed text files")
