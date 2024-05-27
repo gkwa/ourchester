@@ -1,5 +1,15 @@
 import argparse
+import collections
 import pathlib
+
+
+class FileWithTimestamp:
+    def __init__(self, file, timestamp):
+        self.file = file
+        self.timestamp = timestamp
+
+    def __lt__(self, other):
+        return self.timestamp < other.timestamp
 
 
 def find_files(directory):
@@ -57,8 +67,18 @@ def main():
     files = find_files(args.directory)
     files = filter_files(files, args.exclude)
     files = filter_by_extensions(files, args.ext)
+
+    file_timestamps = collections.deque()
     for file in files:
-        print(file)
+        file_timestamps.append(FileWithTimestamp(file, file.stat().st_mtime))
+
+    # Sort the files by timestamp
+    file_timestamps = sorted(file_timestamps, key=lambda x: x.timestamp)
+
+    for file_with_timestamp in file_timestamps:
+        print(
+            f"{file_with_timestamp.file}, Timestamp: {file_with_timestamp.timestamp}"
+        )
 
 
 if __name__ == "__main__":
