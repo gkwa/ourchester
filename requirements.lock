@@ -9,6 +9,8 @@
 #   generate-hashes: false
 
 -e file:.
+ivylantern==0.1.0
+    # via ourchester
 jinja2==3.1.4
     # via ourchester
 markupsafe==2.1.5
