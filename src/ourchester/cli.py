@@ -36,5 +36,8 @@ def parse_args():
         default="index",
         help="Directory containing the index",
     )
+    search_parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose output"
+    )
 
     return parser.parse_args()
