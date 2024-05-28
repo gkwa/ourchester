@@ -32,6 +32,20 @@ def parse_args():
         default="",
         help="Ignore files older than specified time (1h, 3.4d, 1.7y, 10s)",
     )
+    index_parser.add_argument(
+        "--exclude",
+        type=str,
+        action="append",
+        default=[],
+        help="Substrings to exclude from paths.",
+    )
+    index_parser.add_argument(
+        "--ext",
+        type=str,
+        action="append",
+        default=[],
+        help="File extensions to include.",
+    )
 
     search_parser = subparsers.add_parser("search", help="Search indexed text files")
     search_parser.add_argument("query", type=str, help="Proximity search query")

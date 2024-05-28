@@ -20,8 +20,8 @@ def main() -> int:
         directories = [pathlib.Path(dir) for dir in args.directories]
         fps = fishhoof.find_files.build_path_list(
             directories,
-            excludes=[".git"],
-            extensions=["md", "txt", "org"],
+            excludes=args.exclude,
+            extensions=args.extensions,
             newer=args.newer,
         )
 
