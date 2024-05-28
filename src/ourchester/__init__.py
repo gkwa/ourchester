@@ -1,4 +1,3 @@
-import os
 import pathlib
 
 import fishhoof.find_files
@@ -45,9 +44,9 @@ def main() -> int:
 
 def _get_cache_dir():
     user_cache_dir = platformdirs.user_cache_dir()
-    ourchester_cache_dir = os.path.join(user_cache_dir, "ourchester")
-    os.makedirs(ourchester_cache_dir, exist_ok=True)
-    return pathlib.Path(ourchester_cache_dir)
+    ourchester_cache_dir = pathlib.Path(user_cache_dir) / "ourchester"
+    ourchester_cache_dir.mkdir(exists_ok=True, parents=True)
+    return ourchester_cache_dir
 
 
 def _print_search_results(results):
