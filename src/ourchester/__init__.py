@@ -53,4 +53,4 @@ def _get_cache_dir():
 def _print_search_results(results):
     print(f"Found {len(results)} documents:")
     for hit in results:
-        print(f"Path: {hit['path']}")
+        print(f"{hit['path']}")
