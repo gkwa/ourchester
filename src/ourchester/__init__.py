@@ -22,7 +22,7 @@ def main() -> int:
         fps = fishhoof.find_files.build_path_list(
             directories,
             excludes=[".git"],
-            extensions=["md"],
+            extensions=["md", "txt", "org"],
             newer=args.newer,
         )
 

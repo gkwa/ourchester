@@ -3,7 +3,15 @@
 ## Usage example
 
 ```bash
-ourchester --verbose index '/Users/mtm/Documents/Obsidian Vault' /Users/mtm/pdev/taylormonacelli/notes
-ourchester search '"Python test"~10'
+
+# index my notes
+ourchester index ~/pdev/taylormonacelli/notes/ '/Users/mtm/Documents/Obsidian Vault'
+
+# find notes where eleastic and test occur together or where wheat berry recipe that i like is
+ourchester search '"elastic test"~100'
+ourchester search '"berries wheat"~4'
+
+# show where whoosh index is stored
+ourchester config
 
 ```
