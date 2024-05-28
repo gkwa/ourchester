@@ -45,11 +45,11 @@ def main() -> int:
 def _get_cache_dir():
     user_cache_dir = platformdirs.user_cache_dir()
     ourchester_cache_dir = pathlib.Path(user_cache_dir) / "ourchester"
-    ourchester_cache_dir.mkdir(exists_ok=True, parents=True)
+    ourchester_cache_dir.mkdir(exist_ok=True, parents=True)
     return ourchester_cache_dir
 
 
 def _print_search_results(results):
-    print(f"Found {len(results)} documents:")
+    print(f"Found {len(results):,} documents:")
     for hit in results:
         print(f"{hit['path']}")
