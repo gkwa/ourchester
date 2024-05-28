@@ -31,6 +31,7 @@ pathspec==0.12.1
     # via black
 platformdirs==4.2.2
     # via black
+    # via ourchester
 pytimeparse==1.1.8
     # via fishhoof
 whoosh==2.7.4

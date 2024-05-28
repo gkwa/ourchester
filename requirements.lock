@@ -20,6 +20,8 @@ jinja2==3.1.4
     # via ourchester
 markupsafe==2.1.5
     # via jinja2
+platformdirs==4.2.2
+    # via ourchester
 pytimeparse==1.1.8
     # via fishhoof
 whoosh==2.7.4
