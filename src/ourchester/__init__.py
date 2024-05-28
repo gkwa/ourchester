@@ -1,6 +1,7 @@
 import os
 import pathlib
 
+import fishhoof.find_files
 import platformdirs
 import whoosh.index
 
@@ -18,7 +19,15 @@ def main() -> int:
 
     if args.command == "index":
         directories = [pathlib.Path(dir) for dir in args.directories]
-        indexer.index_files(directories, index_dir, args.extensions)
+        fps = fishhoof.find_files.build_path_list(
+            directories,
+            excludes=[".git"],
+            extensions=["md"],
+            newer=args.newer,
+        )
+
+        file_paths = [str(p.file) for p in fps]
+        indexer.index_files(file_paths, index_dir)
     elif args.command == "search":
         try:
             index = indexer.load_index(index_dir)
@@ -28,6 +37,8 @@ def main() -> int:
             print(f"Index does not exist in {index_dir}")
             print("Please run the 'index' command first to create the index.")
             return 1
+    elif args.command == "config":
+        print(f"Index directory: {index_dir}")
 
     return 0
 

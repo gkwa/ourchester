@@ -9,11 +9,18 @@
 #   generate-hashes: false
 
 -e file:.
-ivylantern==0.1.0
+fishhoof==0.0.3
+    # via ourchester
+humanize==4.9.0
+    # via fishhoof
+ivylantern==0.2.3
     # via ourchester
 jinja2==3.1.4
+    # via fishhoof
     # via ourchester
 markupsafe==2.1.5
     # via jinja2
+pytimeparse==1.1.8
+    # via fishhoof
 whoosh==2.7.4
     # via ourchester

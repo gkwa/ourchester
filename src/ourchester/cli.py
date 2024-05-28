@@ -26,6 +26,12 @@ def parse_args():
     index_parser.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output"
     )
+    index_parser.add_argument(
+        "--newer",
+        type=str,
+        default="",
+        help="Ignore files older than specified time (1h, 3.4d, 1.7y, 10s)",
+    )
 
     search_parser = subparsers.add_parser("search", help="Search indexed text files")
     search_parser.add_argument("query", type=str, help="Proximity search query")
@@ -37,6 +43,18 @@ def parse_args():
         help="Directory containing the index",
     )
     search_parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose output"
+    )
+
+    config_parser = subparsers.add_parser("config", help="Show configuration")
+    config_parser.add_argument(
+        "-i",
+        "--index",
+        type=str,
+        default="index",
+        help="Directory containing the index",
+    )
+    config_parser.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output"
     )
 
