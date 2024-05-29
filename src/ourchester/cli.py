@@ -8,6 +8,16 @@ def parse_args():
 
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+    listindex_parser = subparsers.add_parser(
+        "listindex", help="List files in index for debug"
+    )
+    listindex_parser.add_argument(
+        "-i", "--index", type=str, default="index", help="Directory to store the index"
+    )
+    listindex_parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose output"
+    )
+
     index_parser = subparsers.add_parser("index", help="Index text files")
     index_parser.add_argument(
         "directories", type=str, nargs="+", help="Directories containing text files"

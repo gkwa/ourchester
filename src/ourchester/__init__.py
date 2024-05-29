@@ -1,4 +1,5 @@
 import pathlib
+import typing
 
 import fishhoof.find_files
 import platformdirs
@@ -18,15 +19,20 @@ def main() -> int:
 
     if args.command == "index":
         directories = [pathlib.Path(dir) for dir in args.directories]
-        fps = fishhoof.find_files.build_path_list(
-            directories,
-            excludes=args.exclude,
-            extensions=args.extensions,
-            newer=args.newer,
+        file_paths: typing.List[fishhoof.FileWithTimestamp] = (
+            fishhoof.find_files.build_path_list(
+                directories,
+                excludes=args.exclude,
+                extensions=args.extensions,
+                newer=args.newer,
+            )
         )
-
-        file_paths = [str(p.file) for p in fps]
+        file_paths = [item.file for item in file_paths]
         indexer.index_files(file_paths, index_dir)
+
+    elif args.command == "listindex":
+        indexer.get_index_files(index_dir)
+
     elif args.command == "search":
         try:
             index = indexer.load_index(index_dir)

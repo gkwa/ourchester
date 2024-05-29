@@ -1,6 +1,7 @@
 import logging
 import pathlib
 import time
+import typing
 
 import whoosh.fields
 import whoosh.index
@@ -19,11 +20,15 @@ def _index_files(file_paths, writer):
     indexed_paths = set()
     for file_path in file_paths:
         logging.debug(f"deleting from whoosh index {file_path}")
-        writer.delete_by_term("path", file_path)
+        writer.delete_by_term("path", str(file_path))
         with open(file_path, "r") as file:
             content = file.read()
             logging.debug(f"indexing {file_path}")
-            writer.add_document(path=file_path, content=content)
+            writer.add_document(
+                path=str(file_path),
+                title=file_path.with_suffix("").name,
+                content=content,
+            )
             indexed_paths.add(file_path)
     return indexed_paths
 
@@ -37,8 +42,22 @@ def _remove_deleted_files(ix, indexed_paths, writer):
             writer.delete_by_term("path", doc["path"])
 
 
-def index_files(file_paths, index_home_path):
+def get_index_files(index_home_path):
+    ix = whoosh.index.open_dir(index_home_path)
+
+    with ix.reader() as reader:
+        for stored_fields in reader.all_stored_fields():
+            doc_title = stored_fields["title"]
+            doc_path = stored_fields["path"]
+
+            print(f"Title: {doc_title}")
+            print(f"Path: {doc_path}")
+            print("---")
+
+
+def index_files(file_paths: typing.List[pathlib.Path], index_home_path):
     schema = whoosh.fields.Schema(
+        title=whoosh.fields.TEXT(stored=True),
         path=whoosh.fields.ID(unique=True, stored=True),
         content=whoosh.fields.TEXT(stored=True),
     )
