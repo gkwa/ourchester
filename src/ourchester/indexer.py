@@ -3,6 +3,7 @@ import pathlib
 import time
 import typing
 
+import humanize
 import whoosh.fields
 import whoosh.index
 
@@ -69,7 +70,8 @@ def index_files(file_paths: typing.List[pathlib.Path], index_home_path):
     writer.commit()
     end_time = time.time()
     indexing_time = end_time - start_time
-    logger.info(f"Indexing completed in {indexing_time:.2f} seconds")
+    t = humanize.naturaldelta(indexing_time)
+    logger.info(f"Indexing completed in {t}")
 
 
 def _create_or_open_index(index_dir, schema):
