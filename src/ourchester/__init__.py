@@ -1,4 +1,5 @@
 import pathlib
+import sys
 import typing
 
 import fishhoof.find_files
@@ -56,6 +57,6 @@ def _get_cache_dir():
 
 
 def _print_search_results(results):
-    print(f"Found {len(results):,} documents:")
     for hit in results:
         print(f"{hit['path']}")
+    print(f"Found {len(results):,} documents.", file=sys.stderr)
